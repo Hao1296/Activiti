@@ -31,9 +31,9 @@ public class DefaultActivitiEngineAgenda implements ActivitiEngineAgenda {
 
     protected LinkedList<Runnable> operations = new LinkedList<Runnable>();
     protected CommandContext commandContext;
-    
+
     public DefaultActivitiEngineAgenda(CommandContext commandContext) {
-      this.commandContext = commandContext;
+        this.commandContext = commandContext;
     }
 
     @Override
@@ -63,6 +63,11 @@ public class DefaultActivitiEngineAgenda implements ActivitiEngineAgenda {
         logger.debug("Operation {} added to agenda", operation.getClass());
     }
 
+    /**
+     * 处理currentFlowElement
+     *
+     * @param execution 执行流
+     */
     @Override
     public void planContinueProcessOperation(ExecutionEntity execution) {
         planOperation(new ContinueProcessOperation(commandContext, execution));
@@ -83,6 +88,13 @@ public class DefaultActivitiEngineAgenda implements ActivitiEngineAgenda {
         planOperation(new ContinueMultiInstanceOperation(commandContext, execution));
     }
 
+    /**
+     * 执行到这里就说明currentFlowElement已处理完毕，
+     * 状态机需要向OutgoingSequenceFlows方向变迁
+     *
+     * @param execution 执行流
+     * @param evaluateConditions OutgoingSequenceFlows是否存在前置条件
+     */
     @Override
     public void planTakeOutgoingSequenceFlowsOperation(ExecutionEntity execution, boolean evaluateConditions) {
         planOperation(new TakeOutgoingSequenceFlowsOperation(commandContext, execution, evaluateConditions));
