@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
+ * 对应于BPMN的流对象之一——活动。
+ * 活动分为三类: 人工活动、自动活动和子流程活动。
+ * 三种活动可通过behavior来区分(策略模式)
+ *
  * @author Tijs Rademakers
  */
 public abstract class Activity extends FlowNode {

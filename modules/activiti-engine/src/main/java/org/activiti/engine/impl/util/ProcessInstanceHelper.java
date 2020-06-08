@@ -219,10 +219,10 @@ public class ProcessInstanceHelper {
         }
       }
     }
-    
+    // 获取该执行实例的第一条子执行流
     ExecutionEntity execution = processInstance.getExecutions().get(0); // There will always be one child execution created
     commandContext.getAgenda().planContinueProcessOperation(execution);
-
+    // 分派事件(通知该执行实例已开启)
     if (Context.getProcessEngineConfiguration().getEventDispatcher().isEnabled()) {
     	ActivitiEventDispatcher eventDispatcher = Context.getProcessEngineConfiguration().getEventDispatcher();
         eventDispatcher.dispatchEvent(ActivitiEventBuilder.createProcessStartedEvent(execution, variables, false));

@@ -31,6 +31,9 @@ public class Process extends BaseElement implements FlowElementsContainer, HasEx
   protected String documentation;
   protected IOSpecification ioSpecification;
   protected List<ActivitiListener> executionListeners = new ArrayList<ActivitiListener>();
+  /**
+   * 泳道
+   */
   protected List<Lane> lanes = new ArrayList<Lane>();
   protected List<FlowElement> flowElementList = new ArrayList<FlowElement>();
   protected List<ValuedDataObject> dataObjects = new ArrayList<ValuedDataObject>();

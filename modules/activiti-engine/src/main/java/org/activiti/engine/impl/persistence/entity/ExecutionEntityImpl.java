@@ -56,7 +56,11 @@ public class ExecutionEntityImpl extends VariableScopeImpl implements ExecutionE
   /** the parent execution */
   protected ExecutionEntityImpl parent;
 
-  /** nested executions representing scopes or concurrent paths */
+  /**
+   * nested executions representing scopes or concurrent paths
+   *
+   * 存储该Execution的子Execution列表
+   */
   protected List<ExecutionEntityImpl> executions;
 
   /** super execution, not-null if this execution is part of a subprocess */

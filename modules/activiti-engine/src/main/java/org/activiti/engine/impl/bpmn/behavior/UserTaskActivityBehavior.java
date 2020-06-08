@@ -61,11 +61,11 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
   public void execute(DelegateExecution execution) {
     CommandContext commandContext = Context.getCommandContext();
     TaskEntityManager taskEntityManager = commandContext.getTaskEntityManager();
-    
+    // 1. 创建当前用户活动节点对应的Task实例(这里只new对象，没落库)
     TaskEntity task = taskEntityManager.create();
     task.setExecution((ExecutionEntity) execution);
     task.setTaskDefinitionKey(userTask.getId());
-
+    // 2. 设置task对象的各属性值
     String activeTaskName = null;
     String activeTaskDescription = null;
     String activeTaskDueDate = null;
@@ -192,9 +192,9 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior {
         }
       }
     }
-    
+    // 3. 落库，存储task对象
     taskEntityManager.insert(task, (ExecutionEntity) execution);
-    
+    // 4. 后处理(判断是否跳过该用户活动 + 执行Listener)
     boolean skipUserTask = false;
     if (StringUtils.isNotEmpty(activeTaskSkipExpression)) {
       Expression skipExpression = expressionManager.createExpression(activeTaskSkipExpression);

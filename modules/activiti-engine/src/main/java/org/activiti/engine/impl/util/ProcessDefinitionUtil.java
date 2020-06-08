@@ -50,6 +50,12 @@ public class ProcessDefinitionUtil {
     }
   }
 
+  /**
+   * 根据ProcessDefinitionId查找ProcessDefinition，
+   * 并创建Process对象
+   * @param processDefinitionId
+   * @return
+   */
   public static Process getProcess(String processDefinitionId) {
     if (Context.getProcessEngineConfiguration() == null) {
       return Activiti5Util.getActiviti5CompatibilityHandler().getProcessDefinitionProcessObject(processDefinitionId);

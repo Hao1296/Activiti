@@ -71,7 +71,9 @@ public class TakeOutgoingSequenceFlowsOperation extends AbstractOperation {
   }
 
   protected void handleFlowNode(FlowNode flowNode) {
+    // 1. 对代表当前执行实例的Execution做特殊处理
     handleActivityEnd(flowNode);
+    //
     if (flowNode.getParentContainer() != null
         && flowNode.getParentContainer() instanceof AdhocSubProcess) {
       handleAdhocSubProcess(flowNode);

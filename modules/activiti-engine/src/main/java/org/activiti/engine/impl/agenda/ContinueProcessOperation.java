@@ -50,7 +50,9 @@ public class ContinueProcessOperation extends AbstractOperation {
 
   @Override
   public void run() {
+    // 获取Execution的当前FlowElement
     FlowElement currentFlowElement = getCurrentFlowElement(execution);
+    // 处理当期FlowElement
     if (currentFlowElement instanceof FlowNode) {
       continueThroughFlowNode((FlowNode) currentFlowElement);
     } else if (currentFlowElement instanceof SequenceFlow) {
@@ -81,6 +83,7 @@ public class ContinueProcessOperation extends AbstractOperation {
       createChildExecutionForSubProcess((SubProcess) flowNode);
     }
 
+    // 这里的flowNode是当前执行流的currentFlowElement
     if (flowNode instanceof Activity && ((Activity) flowNode).hasMultiInstanceLoopCharacteristics()) {
       // the multi instance execution will look at async
       executeMultiInstanceSynchronous(flowNode);
@@ -126,7 +129,7 @@ public class ContinueProcessOperation extends AbstractOperation {
 
     // Execute actual behavior
     ActivityBehavior activityBehavior = (ActivityBehavior) flowNode.getBehavior();
-
+    // 有Behavior执行Behavior，没有就将当前Execution的currentFlowElement改为下一节点
     if (activityBehavior != null) {
       executeActivityBehavior(activityBehavior, flowNode);
 
