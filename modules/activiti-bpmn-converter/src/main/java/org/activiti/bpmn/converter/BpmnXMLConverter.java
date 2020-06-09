@@ -363,7 +363,7 @@ public class BpmnXMLConverter implements BpmnXMLConstants {
           messageFlowParser.parse(xtr, model);
 
         } else if (ELEMENT_PROCESS.equals(xtr.getLocalName())) {
-
+          // 这里只是将<process>标签的属性读出来设置到Process实例内，没有解析子元素
           Process process = processParser.parse(xtr, model);
           if (process != null) {
             activeProcess = process;

@@ -1463,10 +1463,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public void initDeployers() {
     if (this.deployers == null) {
       this.deployers = new ArrayList<Deployer>();
+      // deployers中加入customPreDeployers
       if (customPreDeployers != null) {
         this.deployers.addAll(customPreDeployers);
       }
+      // deployers中加入defaultDeployers(当前只有一个BpmnDeployer)
       this.deployers.addAll(getDefaultDeployers());
+      // deployers中加入customPostDeployers
       if (customPostDeployers != null) {
         this.deployers.addAll(customPostDeployers);
       }

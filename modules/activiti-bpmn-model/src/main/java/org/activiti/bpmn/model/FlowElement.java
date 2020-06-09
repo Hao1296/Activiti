@@ -24,6 +24,26 @@ public abstract class FlowElement extends BaseElement implements HasExecutionLis
 
   protected String name;
   protected String documentation;
+  /**
+   * Activiti在BPMN2.0基础上添加了ExecutionListener功能，允许监听和bpmn元素相关的事件：
+   * <pre>
+   * 1. Start and ending of a process instance.
+   * 2. Taking a transition.
+   * 3. Start and ending of an activity.
+   * 4. Start and ending of a gateway.
+   * 5. Start and ending of intermediate events.
+   * 6. Ending a start event or starting an end event.
+   * </pre>
+   *
+   * 示例:
+   * <pre>
+   * &lt;userTask id="exampleTask" >
+   *   &lt;extensionElements>
+   *     &lt;activiti:executionListener class="com.hao.activiti.ExampleLister" event="end" />
+   *   &lt;/extensionElements>
+   * &lt;/userTask>
+   * </pre>
+   */
   protected List<ActivitiListener> executionListeners = new ArrayList<ActivitiListener>();
   protected FlowElementsContainer parentContainer;
 
