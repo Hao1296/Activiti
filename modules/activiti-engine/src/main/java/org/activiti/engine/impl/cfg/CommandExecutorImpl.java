@@ -15,6 +15,11 @@ import org.activiti.engine.impl.interceptor.CommandInterceptor;
 public class CommandExecutorImpl implements CommandExecutor {
 
     protected CommandConfig defaultConfig;
+    /**
+     * Command执行"职责链"中的头结点
+     *
+     * @see ProcessEngineConfigurationImpl#commandInterceptors
+     */
     protected CommandInterceptor first;
 
     public CommandExecutorImpl(CommandConfig defaultConfig, CommandInterceptor first) {
