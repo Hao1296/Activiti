@@ -18,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 命令执行职责链中的最后一个节点，真正执行command。
+ * 在此之前的都是XXXInterceptor，用于做一些附加操作
  * @author Joram Barrez
  */
 public class CommandInvoker extends AbstractCommandInterceptor {
@@ -31,6 +33,7 @@ public class CommandInvoker extends AbstractCommandInterceptor {
 
     // Execute the command.
     // This will produce operations that will be put on the agenda.
+    // 将command封装成Runnable，追加到operations内
     commandContext.getAgenda().planOperation(new Runnable() {
       @Override
       public void run() {
@@ -39,6 +42,7 @@ public class CommandInvoker extends AbstractCommandInterceptor {
     });
 
     // Run loop for agenda
+    // 执行operation内的所有Runnable
     executeOperations(commandContext);
 
     // At the end, call the execution tree change listeners.

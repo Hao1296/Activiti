@@ -107,6 +107,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * 流程引擎配置类，实现类如下：
+ * <pre>
+ * {@link StandaloneProcessEngineConfiguration}: 独立部署环境
+ * {@link StandaloneInMemProcessEngineConfiguration}: 独立部署，并使用内存数据库H2
+ * {@link JtaProcessEngineConfiguration}: 独立部署，并使用JTA管理事务
+ * SpringProcessEngineConfiguration: 与Spring整合
+ * </pre>
+ *
  * @author Tom Baeyens
  * @author Joram Barrez
  */
@@ -157,7 +165,19 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    */
   protected List<CommandInterceptor> customPreCommandInterceptors;
   protected List<CommandInterceptor> customPostCommandInterceptors;
-
+  /**
+   * 处理Command的"职责链"，顺序如下:
+   * <pre>
+   * 1. customPreCommandInterceptors
+   * 2. defaultCommandInterceptors
+   *   a. {@link LogInterceptor}: 用于在开启debug level时打印debug日志
+   *   b. 【可选】transactionInterceptor: 在使用{@link JtaProcessEngineConfiguration}时会被加入到职责链
+   *   c. 【可选】{@link CommandContextInterceptor}: 在commandContextFactory不为null时会被加入到职责链
+   *   d. 【可选】{@link TransactionContextInterceptor}: 在transactionContextFactory不为null时会被加入职责链
+   * 3. customPostCommandInterceptors
+   * 4. {@link org.activiti.engine.impl.interceptor.CommandInvoker commandInvoker}: Command真正执行者，职责链最后一个节点
+   * </pre>
+   */
   protected List<CommandInterceptor> commandInterceptors;
 
   /** this will be initialized during the configurationComplete() */
